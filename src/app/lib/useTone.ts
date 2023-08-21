@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { MyContext } from "./lib/MyProvider";
+import { MyContext } from "./ToneProvider";
 
 interface Tone {
   freq: number;
   volume: number;
 
   // a user gesture is required to start audio signal
-  init: () => void;
+  // init: () => void;
 
   // play basically just turns up the volume
   play: () => void;
@@ -29,7 +29,7 @@ const defaultOptions: Options = {
 };
 
 function useTone(options: Partial<Options>): Tone {
-  const ctx = useContext<AudioContext>(MyContext);
+  const { ctx, initialized, setInitialized } = useContext(MyContext);
   const [osc, setOsc] = useState<OscillatorNode>(ctx.createOscillator());
   const [gain, setGain] = useState<GainNode>(ctx.createGain());
 
@@ -38,8 +38,6 @@ function useTone(options: Partial<Options>): Tone {
     ...defaultOptions,
     ...options,
   } as Options;
-
-  console.log(cfg);
 
   useEffect(() => {
     osc.connect(gain);
@@ -64,6 +62,9 @@ function useTone(options: Partial<Options>): Tone {
   };
 
   const play = () => {
+    try {
+      osc.start();
+    } catch (e) {}
     gain.gain.setValueAtTime(cfg.volume, ctx.currentTime);
   };
 
@@ -74,7 +75,7 @@ function useTone(options: Partial<Options>): Tone {
   return {
     freq: osc.frequency.value,
     volume: gain.gain.value,
-    init,
+    // init,
     play,
     stop,
 
