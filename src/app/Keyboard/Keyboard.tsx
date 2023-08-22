@@ -10,7 +10,7 @@ function Keyboard() {
     <KeyboardKey key={String(key.freq)} keyConfig={key} />
   ));
 
-  return <div className="flex h-full gap-1">{renderedKeys}</div>;
+  return <div className="flex h-full">{renderedKeys}</div>;
 }
 
 export { Keyboard };

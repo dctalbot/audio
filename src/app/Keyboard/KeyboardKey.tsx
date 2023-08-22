@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Key } from "../lib/useKeyboard";
 import { useTone } from "../lib/useTone";
+import { useWindowSize } from "../useWindowSize";
 
 interface KeyboardKeyProps {
   keyConfig: Key;
@@ -8,6 +9,17 @@ interface KeyboardKeyProps {
 function KeyboardKey({ keyConfig }: KeyboardKeyProps) {
   const tone = useTone({ freq: keyConfig.freq });
   const [checked, setChecked] = useState(false);
+  const [height, setHeight] = useState(0);
+  const [screenWidth] = useWindowSize();
+  const ref = useRef<HTMLDivElement>(null);
+
+  const stdWidth = 7 / 8;
+  const stdHeight = 6;
+  const heightMultipler = (1 / stdWidth) * stdHeight;
+
+  useEffect(() => {
+    setHeight((ref?.current?.offsetWidth ?? 0) * heightMultipler);
+  }, [screenWidth]);
 
   useEffect(() => {
     if (checked) {
@@ -18,9 +30,13 @@ function KeyboardKey({ keyConfig }: KeyboardKeyProps) {
   }, [checked]);
 
   return (
-    <div className="flex-grow h-full flex flex-col ">
+    <div
+      ref={ref}
+      className="flex-grow h-full flex flex-col"
+      style={{ height: height + "px" }}
+    >
       <div
-        className="flex-grow bg-blue-200 hover:bg-blue-300 border border-black"
+        className="flex-grow bg-blue-200 hover:bg-blue-300"
         onMouseEnter={() => {
           if (checked) return;
           tone.play();
