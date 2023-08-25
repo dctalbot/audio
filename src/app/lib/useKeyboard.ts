@@ -1,5 +1,6 @@
 export interface Key {
   freq: number;
+  color: "white" | "black";
 }
 
 export interface UseKeyboardResult {
@@ -7,15 +8,20 @@ export interface UseKeyboardResult {
 }
 
 function useKeyboard(): UseKeyboardResult {
-  const keys = [
-    { freq: 261.63 },
-    { freq: 293.66 },
-    { freq: 329.63 },
-    { freq: 349.23 },
-    { freq: 392.0 },
-    { freq: 440.0 },
-    { freq: 493.88 },
-    { freq: 523.25 },
+  const keys: Key[] = [
+    { freq: 261.63, color: "white" },
+    { freq: 277.18, color: "black" },
+    { freq: 293.66, color: "white" },
+    { freq: 311.13, color: "black" },
+    { freq: 329.63, color: "white" },
+    { freq: 349.23, color: "white" },
+    { freq: 369.99, color: "black" },
+    { freq: 392.0, color: "white" },
+    { freq: 415.3, color: "black" },
+    { freq: 440.0, color: "white" },
+    { freq: 466.16, color: "black" },
+    { freq: 493.88, color: "white" },
+    { freq: 523.25, color: "white" },
   ];
 
   return {
