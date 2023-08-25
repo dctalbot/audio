@@ -1,3 +1,5 @@
+"use client";
+
 import { useContext, useEffect, useState } from "react";
 import { AppAudioContext } from "./ToneProvider";
 
@@ -64,7 +66,6 @@ function useTone(options: Partial<Options>): Tone {
   };
 
   const play = () => {
-    console.log(cfg.freq);
     try {
       osc.start();
     } catch (e) {}

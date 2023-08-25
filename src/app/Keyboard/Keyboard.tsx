@@ -81,12 +81,16 @@ function Keyboard(props: KeyboardProps) {
     }
 
     if (keys[i + 1]?.color === "white") {
-      acc.push(<div className="flex-1"></div>);
+      acc.push(
+        <div className="flex-1" key={"empty-" + String(keys[i + 1].freq)}></div>
+      );
       return acc;
     }
 
     if (i === keys.length - 1 && keys[i].color === "white") {
-      acc.push(<div className="flex-1"></div>);
+      acc.push(
+        <div className="flex-1" key={"empty2-" + String(keys[i].freq)}></div>
+      );
     }
 
     return acc;
