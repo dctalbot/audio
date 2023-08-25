@@ -13,7 +13,7 @@ interface KeyboardProps {
 // It fills the width of the parent container
 function Keyboard(props: KeyboardProps) {
   const keyCount = props.keyCount ?? 40;
-  const { keys } = useKeyboard({ drone: 110, keyCount });
+  const { keys } = useKeyboard({ drone: 55, keyCount });
 
   const [whiteHeight, setWhiteHeight] = useState(0);
 
