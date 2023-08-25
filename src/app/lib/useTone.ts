@@ -44,8 +44,10 @@ function useTone(options: Partial<Options>): Tone {
     gain.connect(ctx.destination);
 
     return () => {
-      osc.disconnect(ctx.destination);
-      gain.disconnect(ctx.destination);
+      try {
+        osc.disconnect(ctx.destination);
+        gain.disconnect(ctx.destination);
+      } catch (e) {}
     };
   }, []);
 
@@ -62,6 +64,7 @@ function useTone(options: Partial<Options>): Tone {
   };
 
   const play = () => {
+    console.log(cfg.freq);
     try {
       osc.start();
     } catch (e) {}

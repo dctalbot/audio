@@ -5,10 +5,15 @@ import { useKeyboard } from "../lib/useKeyboard";
 import { useWindowSize } from "../useWindowSize";
 import { useEffect, useRef, useState } from "react";
 
+interface KeyboardProps {
+  keyCount?: number;
+}
+
 // Keyboard renders 1 octave of keys
 // It fills the width of the parent container
-function Keyboard() {
-  const { keys } = useKeyboard();
+function Keyboard(props: KeyboardProps) {
+  const keyCount = props.keyCount ?? 40;
+  const { keys } = useKeyboard({ drone: 110, keyCount });
 
   const [whiteHeight, setWhiteHeight] = useState(0);
 
@@ -32,16 +37,12 @@ function Keyboard() {
     const whiteWidth = (ref?.current?.offsetWidth ?? 0) / whiteKeyCount;
     const whiteHeight = (stdWhiteHeight / stdWhiteWidth) * whiteWidth;
     setWhiteHeight(whiteHeight);
-  }, [containerHeight, containerWidth]);
+  }, [containerHeight, containerWidth, keyCount]);
 
   const whiteKeys = keys
     .filter((k) => k.color === "white")
     .map((key, i) => (
-      <KeyboardKey
-        key={String(key.freq)}
-        keyConfig={key}
-        className={`flex-1 bg-neutral-50 hover:bg-neutral-200 border border-black`}
-      />
+      <KeyboardKey key={String(key.freq)} keyConfig={key} variant="white" />
     ));
 
   let blackKeys = [];
@@ -63,7 +64,7 @@ function Keyboard() {
           <KeyboardKey
             key={String(keys[i + 1].freq)}
             keyConfig={keys[i + 1]}
-            className={`bg-neutral-950 hover:bg-neutral-700 border border-black `}
+            variant="black"
             style={{
               width: blackWidth + "px",
               height: "100%",
@@ -80,7 +81,9 @@ function Keyboard() {
     }
   });
 
-  blackKeys.push(<div className="flex-1"></div>);
+  if (keys[keys.length - 1]?.color === "white") {
+    blackKeys.push(<div className="flex-1"></div>);
+  }
 
   return (
     <div className="relative">
