@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { MyContext } from "./ToneProvider";
+import { AppAudioContext } from "./ToneProvider";
 
 interface Tone {
   freq: number;
@@ -29,7 +29,7 @@ const defaultOptions: Options = {
 };
 
 function useTone(options: Partial<Options>): Tone {
-  const { ctx, initialized, setInitialized } = useContext(MyContext);
+  const { ctx, initialized, setInitialized } = useContext(AppAudioContext);
   const [osc, setOsc] = useState<OscillatorNode>(ctx.createOscillator());
   const [gain, setGain] = useState<GainNode>(ctx.createGain());
 

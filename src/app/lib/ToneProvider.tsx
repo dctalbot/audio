@@ -1,18 +1,18 @@
 "use client";
 
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useRef, useState } from "react";
 
 interface ToneProviderProps {
   children: React.ReactNode;
 }
 
-interface MyContext {
+interface AppAudioContext {
   ctx: AudioContext;
   initialized: boolean;
   setInitialized: (initialized: boolean) => void;
 }
 
-export const MyContext = createContext<MyContext>({
+export const AppAudioContext = createContext<AppAudioContext>({
   ctx: new AudioContext(),
   initialized: false,
   setInitialized: (x: boolean) => {},
@@ -23,9 +23,9 @@ function ToneProvider({ children }: ToneProviderProps) {
   const [initialized, setInitialized] = useState(false);
 
   return (
-    <MyContext.Provider value={{ ctx, initialized, setInitialized }}>
+    <AppAudioContext.Provider value={{ ctx, initialized, setInitialized }}>
       {children}
-    </MyContext.Provider>
+    </AppAudioContext.Provider>
   );
 }
 
