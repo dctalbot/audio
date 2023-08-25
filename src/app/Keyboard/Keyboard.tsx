@@ -40,7 +40,7 @@ function Keyboard() {
       <KeyboardKey
         key={String(key.freq)}
         keyConfig={key}
-        className={`flex-1 bg-blue-200 hover:bg-blue-300 border border-black`}
+        className={`flex-1 bg-neutral-50 hover:bg-neutral-200 border border-black`}
       />
     ));
 
@@ -63,7 +63,7 @@ function Keyboard() {
           <KeyboardKey
             key={String(keys[i + 1].freq)}
             keyConfig={keys[i + 1]}
-            className={`bg-red-200 hover:bg-red-300 border border-black `}
+            className={`bg-neutral-950 hover:bg-neutral-700 border border-black `}
             style={{
               width: blackWidth + "px",
               height: "100%",
