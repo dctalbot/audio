@@ -6,11 +6,11 @@ import { useWindowSize } from "../useWindowSize";
 import { useEffect, useRef, useState } from "react";
 
 interface KeyboardProps {
+  // keyCount is the number of keys to render
   keyCount?: number;
 }
 
-// Keyboard renders 1 octave of keys
-// It fills the width of the parent container
+// Keyboard fills the width of its parent element
 function Keyboard(props: KeyboardProps) {
   const keyCount = props.keyCount ?? 40;
   const { keys } = useKeyboard({ tonic: 55, keyCount });
