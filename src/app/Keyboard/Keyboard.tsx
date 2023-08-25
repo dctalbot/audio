@@ -84,7 +84,11 @@ function Keyboard() {
 
   return (
     <div className="relative">
-      <div className="flex" ref={ref} style={{ height: whiteHeight + "px" }}>
+      <div
+        className="flex gap-px"
+        ref={ref}
+        style={{ height: whiteHeight + "px" }}
+      >
         {whiteKeys}
       </div>
       <div className="absolute flex w-full top-0">{blackKeys}</div>
