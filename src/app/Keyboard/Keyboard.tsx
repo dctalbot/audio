@@ -5,6 +5,18 @@ import { useKeyboard } from "../lib/useKeyboard";
 import { useWindowSize } from "../useWindowSize";
 import { useEffect, useRef, useState } from "react";
 
+// standard key dimensions in inches
+const stdKeySize = {
+  white: {
+    width: 7 / 8,
+    height: 6.0,
+  },
+  black: {
+    width: 0.54,
+    height: 3.5,
+  },
+};
+
 interface KeyboardProps {
   // keyCount is the number of keys to render
   keyCount?: number;
@@ -13,31 +25,26 @@ interface KeyboardProps {
 // Keyboard fills the width of its parent element
 function Keyboard(props: KeyboardProps) {
   const keyCount = props.keyCount ?? 40;
+
   const { keys } = useKeyboard({ tonic: 55, keyCount });
-
-  const [whiteHeight, setWhiteHeight] = useState(0);
-
-  const [containerHeight, containerWidth] = useWindowSize();
   const ref = useRef<HTMLDivElement>(null);
-
-  const stdWhiteWidth = 7 / 8;
-  const stdWhiteHeight = 6.0;
-
-  const whiteWidth = (stdWhiteWidth / stdWhiteHeight) * whiteHeight;
-
-  const stdBlackWidth = 0.54;
-  const stdBlackHeight = 3.5;
-
-  const blackHeight = (whiteHeight * stdBlackHeight) / stdWhiteHeight;
-  const blackWidth = (whiteHeight * stdBlackWidth) / stdWhiteHeight;
-  const blackMarginLeft = whiteWidth - blackWidth / 2;
+  const [containerHeight, containerWidth] = useWindowSize();
+  const [whiteHeight, setWhiteHeight] = useState(0);
 
   useEffect(() => {
     const whiteKeyCount = keys.filter((k) => k.color === "white").length;
     const whiteWidth = (ref?.current?.offsetWidth ?? 0) / whiteKeyCount;
-    const whiteHeight = (stdWhiteHeight / stdWhiteWidth) * whiteWidth;
+    const whiteHeight = (stdWhite.height / stdWhite.width) * whiteWidth;
     setWhiteHeight(whiteHeight);
   }, [containerHeight, containerWidth, keyCount]);
+
+  const stdWhite = stdKeySize["white"];
+  const stdBlack = stdKeySize["black"];
+
+  const whiteWidth = (stdWhite.width / stdWhite.height) * whiteHeight;
+  const blackHeight = (whiteHeight * stdBlack.height) / stdWhite.height;
+  const blackWidth = (whiteHeight * stdBlack.width) / stdWhite.height;
+  const blackMarginLeft = whiteWidth - blackWidth / 2;
 
   const whiteKeys = keys
     .filter((k) => k.color === "white")
@@ -45,15 +52,13 @@ function Keyboard(props: KeyboardProps) {
       <KeyboardKey key={String(key.freq)} keyConfig={key} variant="white" />
     ));
 
-  let blackKeys = [];
-
-  keys.forEach((_, i) => {
-    if (keys[i].color === "black") {
-      return;
+  const blackKeys = keys.reduce((acc: JSX.Element[], key, i) => {
+    if (key.color === "black") {
+      return acc;
     }
 
     if (keys[i + 1]?.color === "black") {
-      blackKeys.push(
+      acc.push(
         <div
           className="flex-1"
           style={{
@@ -72,18 +77,20 @@ function Keyboard(props: KeyboardProps) {
           />
         </div>
       );
-      return;
+      return acc;
     }
 
     if (keys[i + 1]?.color === "white") {
-      blackKeys.push(<div className="flex-1"></div>);
-      return;
+      acc.push(<div className="flex-1"></div>);
+      return acc;
     }
-  });
 
-  if (keys[keys.length - 1]?.color === "white") {
-    blackKeys.push(<div className="flex-1"></div>);
-  }
+    if (i === keys.length - 1 && keys[i].color === "white") {
+      acc.push(<div className="flex-1"></div>);
+    }
+
+    return acc;
+  }, []);
 
   return (
     <div className="relative">
