@@ -18,13 +18,15 @@ const stdKeySize = {
 interface KeyboardProps {
   // keyCount is the number of keys to render
   keyCount?: number;
+
+  // tonic is the frequency of the lowest note
+  // must be greater than 0
+  tonic?: number;
 }
 
 // Keyboard fills the width of its parent element
-function Keyboard(props: KeyboardProps) {
-  const keyCount = props.keyCount ?? 40;
-
-  const { keys } = useKeyboard({ tonic: 55, keyCount });
+function Keyboard({ keyCount = 40, tonic = 440 }: KeyboardProps) {
+  const { keys } = useKeyboard({ keyCount, tonic });
   const ref = useRef<HTMLDivElement>(null);
   const [containerHeight, containerWidth] = useWindowSize();
   const [whiteHeight, setWhiteHeight] = useState(0);
