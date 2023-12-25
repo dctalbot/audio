@@ -46,55 +46,41 @@ function Keyboard({ keyCount = 40, tonic = 440 }: KeyboardProps) {
   const blackWidth = (whiteHeight * stdBlack.width) / stdWhite.height;
   const blackMarginLeft = whiteWidth - blackWidth / 2;
 
-  const whiteKeys = keys
-    .filter((k) => k.color === "white")
-    .map((key) => (
-      <KeyboardKey key={String(key.freq)} keyConfig={key} variant="white" />
-    ));
+  const whiteKeys: JSX.Element[] = [];
+  const blackKeys: JSX.Element[] = [];
 
-  const blackKeys = keys.reduce((acc: JSX.Element[], key, i) => {
-    if (key.color === "black") {
-      return acc;
+  keys.forEach((key, i) => {
+    if (key.color === "white") {
+      whiteKeys.push(
+        <KeyboardKey key={String(key.freq)} keyConfig={key} variant="white" />
+      );
+      return;
     }
 
-    if (keys[i + 1]?.color === "black") {
-      acc.push(
-        <div
-          className="flex-1"
+    blackKeys.push(
+      <div
+        className="flex-1"
+        style={{
+          height: blackHeight + "px",
+          transform: `translateX(${
+            blackMarginLeft + (whiteKeys.length - 1) * whiteWidth
+          }px)`,
+          position: "absolute",
+          top: 0,
+        }}
+      >
+        <KeyboardKey
+          key={String(keys[i].freq)}
+          keyConfig={keys[i]}
+          variant="black"
           style={{
-            height: blackHeight + "px",
-            transform: `translateX(${blackMarginLeft}px)`,
+            width: blackWidth + "px",
+            height: "100%",
           }}
-        >
-          <KeyboardKey
-            key={String(keys[i + 1].freq)}
-            keyConfig={keys[i + 1]}
-            variant="black"
-            style={{
-              width: blackWidth + "px",
-              height: "100%",
-            }}
-          />
-        </div>
-      );
-      return acc;
-    }
-
-    if (keys[i + 1]?.color === "white") {
-      acc.push(
-        <div className="flex-1" key={"empty-" + String(keys[i + 1].freq)}></div>
-      );
-      return acc;
-    }
-
-    if (i === keys.length - 1 && keys[i].color === "white") {
-      acc.push(
-        <div className="flex-1" key={"empty2-" + String(keys[i].freq)}></div>
-      );
-    }
-
-    return acc;
-  }, []);
+        />
+      </div>
+    );
+  });
 
   return (
     <div className="relative">
@@ -105,7 +91,8 @@ function Keyboard({ keyCount = 40, tonic = 440 }: KeyboardProps) {
       >
         {whiteKeys}
       </div>
-      <div className="absolute flex w-full top-0">{blackKeys}</div>
+
+      {blackKeys}
     </div>
   );
 }

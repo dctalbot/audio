@@ -1,5 +1,3 @@
-"use client";
-
 export interface Key {
   freq: number;
   color: "white" | "black";
