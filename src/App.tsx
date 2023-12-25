@@ -6,9 +6,6 @@ function App() {
   const [count, setCount] = React.useState(10);
   return (
     <>
-      <div className="some-div">
-        <Keyboard keyCount={count} />
-      </div>
       <input
         type="range"
         min="1"
@@ -16,6 +13,9 @@ function App() {
         value={count}
         onChange={(e) => setCount(Number(e.target.value))}
       />
+      <div className="some-div">
+        <Keyboard keyCount={count} />
+      </div>
     </>
   );
 }
