@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Key } from "../lib/useKeyboard";
 import { useTone } from "../lib/useTone";
-import { useWindowSize } from "../useWindowSize";
 
 interface KeyboardKeyProps {
   keyConfig: Key;

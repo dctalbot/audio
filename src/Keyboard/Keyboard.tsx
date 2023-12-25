@@ -1,5 +1,3 @@
-"use client";
-
 import { KeyboardKey } from "./KeyboardKey";
 import { useKeyboard } from "../lib/useKeyboard";
 import { useWindowSize } from "../useWindowSize";
@@ -48,7 +46,7 @@ function Keyboard(props: KeyboardProps) {
 
   const whiteKeys = keys
     .filter((k) => k.color === "white")
-    .map((key, i) => (
+    .map((key) => (
       <KeyboardKey key={String(key.freq)} keyConfig={key} variant="white" />
     ));
 
