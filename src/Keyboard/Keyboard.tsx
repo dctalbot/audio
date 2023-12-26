@@ -1,5 +1,5 @@
 import { KeyboardKey } from "./KeyboardKey";
-import { useKeyboard } from "../lib/useKeyboard";
+import { useKeyboard } from "./useKeyboard";
 import { useWindowSize } from "../useWindowSize";
 import { useEffect, useRef, useState } from "react";
 

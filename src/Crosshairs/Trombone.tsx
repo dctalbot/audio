@@ -1,9 +1,8 @@
-import { Crosshairs } from "./Crosshairs";
-import { MouseCoordinates } from "./useMousePosition";
+import { Crosshairs, CrosshairsProps } from "./Crosshairs";
 
-const freqs = {
+const notes = {
   F5: 698.456,
-  B4: 493.883,
+  B5: 493.883,
 
   D4: 587.33,
   Ab4: 415.305,
@@ -20,31 +19,31 @@ const freqs = {
 
 const regsiters = [
   {
-    range: [freqs.F5, freqs.B4],
+    range: [notes.F5, notes.B5],
   },
   {
-    range: [freqs.D4, freqs.Ab4],
+    range: [notes.D4, notes.Ab4],
   },
   {
-    range: [freqs.Bb3, freqs.E3],
+    range: [notes.Bb3, notes.E3],
   },
   {
-    range: [freqs.F2, freqs.B2],
+    range: [notes.F2, notes.B2],
   },
   {
-    range: [freqs.Bb1, freqs.E1],
+    range: [notes.Bb1, notes.E1],
   },
 ];
 
 function Trombone() {
-  const makeToneConfig =
-    (reg: (typeof regsiters)[number]) =>
-    ({ rect, mouse }: { rect: DOMRect; mouse: MouseCoordinates }) => {
+  const makeToneConfig = (reg: (typeof regsiters)[number]) => {
+    const inner: CrosshairsProps["makeToneConfig"] = ({ rect, mouse, pin }) => {
       if (!rect.width || !mouse.x) {
         return { freq: 0, volume: 1 };
       }
+      const mouseX = pin?.mouse?.x ?? mouse.x;
 
-      const xPercent = mouse.x / rect.width;
+      const xPercent = mouseX / rect.width;
       const freq = (reg.range[1] - reg.range[0]) * xPercent + reg.range[0];
 
       return {
@@ -52,6 +51,9 @@ function Trombone() {
         volume: 1,
       };
     };
+
+    return inner;
+  };
 
   return (
     <div>

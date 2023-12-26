@@ -1,15 +1,15 @@
-import { Crosshairs } from "./Crosshairs";
+import { Crosshairs, CrosshairsProps } from "./Crosshairs";
 
-const makeToneConfig = ({
+const makeToneConfig: CrosshairsProps["makeToneConfig"] = ({
   rect,
   mouse,
-}: {
-  rect: DOMRect;
-  mouse: { x: number; y: number };
+  pin,
 }) => {
+  const mouseX = pin?.mouse?.x ?? mouse.x;
+  const mouseY = pin?.mouse?.y ?? mouse.y;
   return {
-    freq: mouse.x * 2,
-    volume: mouse.y && rect.height ? 1 - mouse.y / rect.height : 1,
+    freq: mouseX * 2,
+    volume: mouseY && rect.height ? 1 - mouseY / rect.height : 1,
   };
 };
 
