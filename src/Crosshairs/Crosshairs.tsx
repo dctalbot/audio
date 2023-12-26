@@ -73,7 +73,7 @@ function Crosshairs(props: CrosshairsProps) {
     >
       {dimension.includes("y") && (
         <div
-          className="border border-black absolute w-full"
+          className="border border-black bg-black absolute w-full"
           style={{
             height: "2px",
             top: pin?.mouse?.y ?? mouse.y + "px",
@@ -82,7 +82,7 @@ function Crosshairs(props: CrosshairsProps) {
       )}
       {dimension.includes("x") && (
         <div
-          className="border border-black absolute h-full"
+          className="border border-black bg-black absolute h-full"
           style={{
             width: "2px",
             left: pin?.mouse?.x ?? mouse.x + "px",

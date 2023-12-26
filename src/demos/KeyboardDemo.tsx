@@ -13,7 +13,7 @@ function KeyboardDemo() {
               htmlFor="keyboard-keycount"
               className="flex-1 block mb-2 text-gray-900 text-black"
             >
-              Keyboard length
+              Number of keys
             </label>
             <input
               id="keyboard-keycount"
