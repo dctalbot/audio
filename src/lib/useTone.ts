@@ -31,9 +31,9 @@ const defaultOptions: Options = {
 };
 
 function useTone(options: Partial<Options>): Tone {
-  const { ctx, initialized, setInitialized } = useContext(AppAudioContext);
-  const [osc, setOsc] = useState<OscillatorNode>(ctx.createOscillator());
-  const [gain, setGain] = useState<GainNode>(ctx.createGain());
+  const { ctx } = useContext(AppAudioContext);
+  const [osc] = useState<OscillatorNode>(ctx.createOscillator());
+  const [gain] = useState<GainNode>(ctx.createGain());
 
   // derive final configuration
   const cfg = {
@@ -60,10 +60,6 @@ function useTone(options: Partial<Options>): Tone {
   useEffect(() => {
     gain.gain.setValueAtTime(cfg.volume, ctx.currentTime);
   }, [cfg.volume]);
-
-  const init = () => {
-    osc.start();
-  };
 
   const play = () => {
     try {
