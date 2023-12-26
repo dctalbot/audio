@@ -37,6 +37,8 @@ function Crosshairs(props: CrosshairsProps) {
       style={{ height, width: "100%" }}
       onMouseEnter={() => tone.play()}
       onMouseLeave={() => tone.stop()}
+      onTouchStart={() => tone.play()}
+      onTouchEnd={() => tone.stop()}
     >
       {dimension.includes("y") && (
         <div

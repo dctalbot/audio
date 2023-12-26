@@ -30,6 +30,12 @@ function KeyboardKey({
       onMouseLeave={() => {
         tone.stop();
       }}
+      onTouchStart={() => {
+        tone.play();
+      }}
+      onTouchEnd={() => {
+        tone.stop();
+      }}
     ></div>
   );
 }
