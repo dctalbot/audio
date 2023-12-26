@@ -5,9 +5,6 @@ interface Tone {
   freq: number;
   volume: number;
 
-  // a user gesture is required to start audio signal
-  // init: () => void;
-
   // play basically just turns up the volume
   play: () => void;
   // stop sets the volume to zero
@@ -18,19 +15,19 @@ interface Tone {
   gainNode: GainNode;
 }
 
-export interface Options {
-  // frequency in hertz
-  // must be between -24000 and 24000
+export interface UseToneOptions {
+  // frequency in hertz between -24000 and 24000
   freq: number;
+  // gain value between 0 and 1
   volume: number;
 }
 
-const defaultOptions: Options = {
+const defaultOptions: UseToneOptions = {
   freq: 440,
   volume: 1,
 };
 
-function useTone(options: Partial<Options>): Tone {
+function useTone(options: Partial<UseToneOptions>): Tone {
   const { ctx } = useContext(AppAudioContext);
   const [osc] = useState<OscillatorNode>(ctx.createOscillator());
   const [gain] = useState<GainNode>(ctx.createGain());
@@ -39,7 +36,7 @@ function useTone(options: Partial<Options>): Tone {
   const cfg = {
     ...defaultOptions,
     ...options,
-  } as Options;
+  } as UseToneOptions;
 
   useEffect(() => {
     osc.connect(gain);
@@ -75,7 +72,6 @@ function useTone(options: Partial<Options>): Tone {
   return {
     freq: osc.frequency.value,
     volume: gain.gain.value,
-    // init,
     play,
     stop,
 

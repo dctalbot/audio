@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { MouseCoordinates, useMousePosition } from "./useMousePosition";
-import { Options as ToneOptions, useTone } from "../lib/useTone";
+import { UseToneOptions, useTone } from "../lib/useTone";
 
 export interface CrosshairsProps {
   makeToneConfig: (elemAttrs: {
     rect: DOMRect;
     mouse: MouseCoordinates;
-  }) => ToneOptions;
+  }) => UseToneOptions;
 
   height?: number;
 
