@@ -1,4 +1,5 @@
 import { Crosshairs } from "./Crosshairs";
+import { MouseCoordinates } from "./useMousePosition";
 
 const freqs = {
   F5: 698.456,
@@ -38,7 +39,7 @@ const regsiters = [
 function Trombone() {
   const makeToneConfig =
     (reg: (typeof regsiters)[number]) =>
-    ({ rect, mouse }) => {
+    ({ rect, mouse }: { rect: DOMRect; mouse: MouseCoordinates }) => {
       if (!rect.width || !mouse.x) {
         return { freq: 0, volume: 1 };
       }

@@ -18,7 +18,7 @@ function useMousePosition(cfg: UseMousePositionConfig): MouseCoordinates {
   });
 
   useEffect(() => {
-    const updateMousePosition = (ev) => {
+    const updateMousePosition = (ev: MouseEvent) => {
       const elem = cfg?.element?.getBoundingClientRect() as DOMRect;
       if (!elem) {
         setResult({

@@ -17,7 +17,7 @@ export const AppAudioContext: Context<AppAudioContext> =
     ctx:
       typeof window === "undefined" ? (undefined as any) : new AudioContext(),
     initialized: false,
-    setInitialized: (x: boolean) => {},
+    setInitialized: () => {},
   });
 
 function ToneProvider({ children }: ToneProviderProps) {
