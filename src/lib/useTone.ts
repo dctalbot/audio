@@ -1,5 +1,3 @@
-"use client";
-
 import { useContext, useEffect, useState } from "react";
 import { AppAudioContext } from "./ToneProvider";
 
@@ -21,6 +19,8 @@ interface Tone {
 }
 
 interface Options {
+  // frequency in hertz
+  // must be between -24000 and 24000
   freq: number;
   volume: number;
 }
