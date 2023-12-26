@@ -9,7 +9,7 @@ const makeToneConfig = ({
 }) => {
   return {
     freq: mouse.x * 2,
-    volume: mouse.y && rect.height ? (1 - mouse.y / rect.height) * 2 : 1,
+    volume: mouse.y && rect.height ? 1 - mouse.y / rect.height : 1,
   };
 };
 

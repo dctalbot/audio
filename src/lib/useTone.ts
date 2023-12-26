@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AppAudioContext } from "./ToneProvider";
 
 interface Tone {
@@ -16,7 +16,7 @@ interface Tone {
 }
 
 export interface UseToneOptions {
-  // frequency in hertz between -24000 and 24000
+  // frequency in hertz between 1 and 24000
   freq: number;
   // gain value between 0 and 1
   volume: number;
@@ -29,14 +29,14 @@ const defaultOptions: UseToneOptions = {
 
 function useTone(options: Partial<UseToneOptions>): Tone {
   const { ctx } = useContext(AppAudioContext);
-  const [osc] = useState<OscillatorNode>(ctx.createOscillator());
-  const [gain] = useState<GainNode>(ctx.createGain());
+  const osc = useRef<OscillatorNode>(ctx.createOscillator()).current;
+  const gain = useRef<GainNode>(ctx.createGain()).current;
 
   // derive final configuration
-  const cfg = {
+  const opts: UseToneOptions = {
     ...defaultOptions,
     ...options,
-  } as UseToneOptions;
+  };
 
   useEffect(() => {
     osc.connect(gain);
@@ -51,18 +51,18 @@ function useTone(options: Partial<UseToneOptions>): Tone {
   }, []);
 
   useEffect(() => {
-    osc.frequency.setValueAtTime(cfg.freq, ctx.currentTime);
-  }, [cfg.freq]);
+    osc.frequency.setValueAtTime(opts.freq, ctx.currentTime);
+  }, [opts.freq]);
 
   useEffect(() => {
-    gain.gain.setValueAtTime(cfg.volume, ctx.currentTime);
-  }, [cfg.volume]);
+    gain.gain.setValueAtTime(opts.volume, ctx.currentTime);
+  }, [opts.volume]);
 
   const play = () => {
     try {
       osc.start();
     } catch (e) {}
-    gain.gain.setValueAtTime(cfg.volume, ctx.currentTime);
+    gain.gain.setValueAtTime(opts.volume, ctx.currentTime);
   };
 
   const stop = () => {
