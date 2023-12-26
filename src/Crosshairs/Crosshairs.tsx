@@ -7,9 +7,14 @@ export interface CrosshairsProps {
     rect: DOMRect;
     mouse: MouseCoordinates;
   }) => ToneOptions;
+
+  height?: number;
+
+  dimension?: "x" | "y" | "xy";
 }
 
 function Crosshairs(props: CrosshairsProps) {
+  const { height = 250, makeToneConfig, dimension = "xy" } = props;
   const [ready, setReady] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -17,7 +22,7 @@ function Crosshairs(props: CrosshairsProps) {
 
   const mouse = useMousePosition({ element: ref.current });
 
-  const tone = useTone(props.makeToneConfig({ rect, mouse }));
+  const tone = useTone(makeToneConfig({ rect, mouse }));
 
   useEffect(() => {
     if (!ready && ref.current) {
@@ -29,24 +34,28 @@ function Crosshairs(props: CrosshairsProps) {
     <div
       ref={ref}
       className="border-2 border-black overflow-hidden relative"
-      style={{ height: 250, width: "100%" }}
+      style={{ height, width: "100%" }}
       onMouseEnter={() => tone.play()}
       onMouseLeave={() => tone.stop()}
     >
-      <div
-        className="border border-black absolute w-full"
-        style={{
-          height: "2px",
-          top: mouse.y + "px",
-        }}
-      />
-      <div
-        className="border border-black absolute h-full"
-        style={{
-          width: "2px",
-          left: mouse.x + "px",
-        }}
-      />
+      {dimension.includes("y") && (
+        <div
+          className="border border-black absolute w-full"
+          style={{
+            height: "2px",
+            top: mouse.y + "px",
+          }}
+        />
+      )}
+      {dimension.includes("x") && (
+        <div
+          className="border border-black absolute h-full"
+          style={{
+            width: "2px",
+            left: mouse.x + "px",
+          }}
+        />
+      )}
     </div>
   );
 }
