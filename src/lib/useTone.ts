@@ -18,7 +18,7 @@ interface Tone {
   gainNode: GainNode;
 }
 
-interface Options {
+export interface Options {
   // frequency in hertz
   // must be between -24000 and 24000
   freq: number;

@@ -1,21 +1,23 @@
 import { useEffect, useRef, useState } from "react";
-import { useMousePosition } from "./useMousePosition";
-import { useTone } from "../lib/useTone";
+import { MouseCoordinates, useMousePosition } from "./useMousePosition";
+import { Options as ToneOptions, useTone } from "../lib/useTone";
 
-function Crosshairs() {
+export interface CrosshairsProps {
+  makeToneConfig: (elemAttrs: {
+    rect: DOMRect;
+    mouse: MouseCoordinates;
+  }) => ToneOptions;
+}
+
+function Crosshairs(props: CrosshairsProps) {
   const [ready, setReady] = useState(false);
-  const [volume, setVolume] = useState(0);
   const ref = useRef<HTMLDivElement | null>(null);
 
   const rect = ref?.current?.getBoundingClientRect() ?? new DOMRect(0, 0, 0, 0);
 
   const mouse = useMousePosition({ element: ref.current });
 
-  const tone = useTone({
-    freq: (rect.right - mouse.x) * 2,
-    volume: 1,
-    // volume: rect.bottom / mouse.y,
-  });
+  const tone = useTone(props.makeToneConfig({ rect, mouse }));
 
   useEffect(() => {
     if (!ready && ref.current) {

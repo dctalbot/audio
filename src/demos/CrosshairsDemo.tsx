@@ -1,7 +1,7 @@
-import { Crosshairs } from "../Crosshairs/Crosshairs";
+import { Theremin } from "../Crosshairs/Theremin";
 
 function CrosshairsDemo() {
-  return <Crosshairs />;
+  return <Theremin />;
 }
 
 export { CrosshairsDemo };

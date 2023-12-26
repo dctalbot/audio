@@ -6,7 +6,7 @@ interface UseMousePositionConfig {
   element?: HTMLElement | null;
 }
 
-interface MouseCoordinates {
+export interface MouseCoordinates {
   x: number;
   y: number;
 }
