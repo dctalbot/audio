@@ -1,6 +1,5 @@
 import "./App.css";
 import { KeyboardDemo } from "./demos/KeyboardDemo";
-import { CrosshairsDemo } from "./demos/CrosshairsDemo";
 import { Trombone } from "./Crosshairs/Trombone";
 import { Theremin } from "./Crosshairs/Theremin";
 
