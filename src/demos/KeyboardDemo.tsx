@@ -6,7 +6,7 @@ function KeyboardDemo() {
   const [tonic, setTonic] = React.useState(440);
   return (
     <>
-      <div className="some-div p-2">
+      <div>
         <form className="mb-2">
           <div className="flex items-center">
             <label
@@ -63,4 +63,4 @@ function KeyboardDemo() {
   );
 }
 
-export default KeyboardDemo;
+export { KeyboardDemo };

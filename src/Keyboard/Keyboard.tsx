@@ -59,6 +59,7 @@ function Keyboard({ keyCount = 40, tonic = 440 }: KeyboardProps) {
 
     blackKeys.push(
       <div
+        key={String(keys[i].freq)}
         className="flex-1"
         style={{
           height: blackHeight + "px",
@@ -70,7 +71,6 @@ function Keyboard({ keyCount = 40, tonic = 440 }: KeyboardProps) {
         }}
       >
         <KeyboardKey
-          key={String(keys[i].freq)}
           keyConfig={keys[i]}
           variant="black"
           style={{
