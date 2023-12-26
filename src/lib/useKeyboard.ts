@@ -3,11 +3,8 @@ export interface Key {
   color: "white" | "black";
 }
 
-type Temperment = "equal" | "just" | "pythagorean";
-
 interface KeyboardConfig {
   tonic?: number;
-  temperament?: Temperment;
   keyCount?: number;
 }
 
@@ -20,7 +17,7 @@ const getEqualTemperamentFreq = (tonic: number, n: number): number => {
 };
 
 function useKeyboard(config: KeyboardConfig = {}): UseKeyboardResult {
-  const { tonic = 440, temperament = "equal", keyCount = 12 } = config;
+  const { tonic = 440, keyCount = 12 } = config;
 
   const keys = new Array(keyCount).fill(0).map((_, i) => ({
     freq: getEqualTemperamentFreq(tonic, i),
